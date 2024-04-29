@@ -1,0 +1,20 @@
+WITH Player_Table AS
+(SELECT
+season,tournament,full_name,
+0.3*SUM(points)+
+0.2*SUM(blocks)+
+0.1*SUM(steals)+
+-0.1*SUM(turnovers)+
+0.2*SUM(assists)+
+0.2*SUM(rebounds)+
+-0.1*SUM(personal_fouls)+
+-0.05*SUM(tech_fouls) AS weights,
+COUNT(game_id) AS games_played
+FROM `bigquery-public-data.ncaa_basketball.mbb_players_games_sr`
+where season = 2016 AND tournament = 'NCAA'
+group by season,tournament,full_name
+order by full_name)
+
+SELECT full_name,weights/Player_Table.games_played AS weights_ratio FROM Player_Table
+order by weights_ratio DESC LIMIT 1;
+
