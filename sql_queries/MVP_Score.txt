@@ -1,4 +1,4 @@
-WITH Team_Table AS (
+ WITH Team_Table AS (
   SELECT
     team_id,
     name,
