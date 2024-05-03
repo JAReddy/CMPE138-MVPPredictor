@@ -1,8 +1,9 @@
 SELECT
     pg.full_name,
-    t.id as team_id,
     g.season,
     g.tournament,
+    t.id as team_id,
+    t.name as team_name,
     ROUND(
             (
                 SUM(pg.points) * 0.3 +                      --w1 for points - 0.3
@@ -47,6 +48,7 @@ WHERE
 GROUP BY
     pg.full_name,
     t.id,
+    t.name,
     g.season,
     g.tournament
 ORDER BY total_score DESC;
